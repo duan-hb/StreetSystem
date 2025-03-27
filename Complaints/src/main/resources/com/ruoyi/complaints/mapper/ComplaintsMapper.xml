@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.complaints.mapper.ComplaintsMapper">
+
+    <resultMap type="Complaints" id="ComplaintsResult">
+        <result property="id"    column="id"    />
+        <result property="storeId"    column="store_id"    />
+        <result property="shopName"    column="shop_name"    />
+        <result property="complaintId"    column="complaint_id"    />
+        <result property="complaintName"    column="complaint_name"    />
+        <result property="complainantPhone"    column="complainant_phone"    />
+        <result property="complaintType"    column="complaint_type"    />
+        <result property="creatTime"    column="creat_time"    />
+        <result property="description"    column="description"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectComplaintsVo">
+        select id, store_id, shop_name, complaint_id, complaint_name, complainant_phone, complaint_type, creat_time, description, status from complaints
+    </sql>
+
+    <select id="selectComplaintsList" parameterType="Complaints" resultMap="ComplaintsResult">
+        <include refid="selectComplaintsVo"/>
+        <where>
+            <if test="shopName != null  and shopName != ''"> and shop_name like concat('%', #{shopName}, '%')</if>
+            <if test="complaintName != null  and complaintName != ''"> and complaint_name like concat('%', #{complaintName}, '%')</if>
+            <if test="complaintType != null  and complaintType != ''"> and complaint_type = #{complaintType}</if>
+            <if test="params.beginCreatTime != null and params.beginCreatTime != '' and params.endCreatTime != null and params.endCreatTime != ''"> and creat_time between #{params.beginCreatTime} and #{params.endCreatTime}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+
+    <select id="selectComplaintsById" parameterType="Long" resultMap="ComplaintsResult">
+        <include refid="selectComplaintsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertComplaints" parameterType="Complaints" useGeneratedKeys="true" keyProperty="id">
+        insert into complaints
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">store_id,</if>
+            <if test="shopName != null and shopName != ''">shop_name,</if>
+            <if test="complaintId != null">complaint_id,</if>
+            <if test="complaintName != null">complaint_name,</if>
+            <if test="complainantPhone != null">complainant_phone,</if>
+            <if test="complaintType != null and complaintType != ''">complaint_type,</if>
+            <if test="creatTime != null">creat_time,</if>
+            <if test="description != null and description != ''">description,</if>
+            <if test="status != null">status,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="storeId != null">#{storeId},</if>
+            <if test="shopName != null and shopName != ''">#{shopName},</if>
+            <if test="complaintId != null">#{complaintId},</if>
+            <if test="complaintName != null">#{complaintName},</if>
+            <if test="complainantPhone != null">#{complainantPhone},</if>
+            <if test="complaintType != null and complaintType != ''">#{complaintType},</if>
+            <if test="creatTime != null">#{creatTime},</if>
+            <if test="description != null and description != ''">#{description},</if>
+            <if test="status != null">#{status},</if>
+        </trim>
+    </insert>
+
+    <update id="updateComplaints" parameterType="Complaints">
+        update complaints
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="shopName != null and shopName != ''">shop_name = #{shopName},</if>
+            <if test="complaintId != null">complaint_id = #{complaintId},</if>
+            <if test="complaintName != null">complaint_name = #{complaintName},</if>
+            <if test="complainantPhone != null">complainant_phone = #{complainantPhone},</if>
+            <if test="complaintType != null and complaintType != ''">complaint_type = #{complaintType},</if>
+            <if test="creatTime != null">creat_time = #{creatTime},</if>
+            <if test="description != null and description != ''">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteComplaintsById" parameterType="Long">
+        delete from complaints where id = #{id}
+    </delete>
+
+    <delete id="deleteComplaintsByIds" parameterType="String">
+        delete from complaints where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.manager.mapper.ManagerMapper">
+
+    <resultMap type="Manager" id="ManagerResult">
+        <result property="id"    column="id"    />
+        <result property="managerName"    column="manager_name"    />
+        <result property="password"    column="password"    />
+        <result property="tel"    column="tel"    />
+        <result property="emile"    column="emile"    />
+        <result property="userType"    column="user_type"    />
+        <result property="joinTime"    column="join_time"    />
+        <result property="status"    column="status"    />
+        <result property="image"    column="image"    />
+    </resultMap>
+
+    <sql id="selectManagerVo">
+        select id, manager_name, password, tel, emile, user_type, join_time, status, image from a_manager
+    </sql>
+
+    <select id="selectManagerList" parameterType="Manager" resultMap="ManagerResult">
+        <include refid="selectManagerVo"/>
+        <where>
+            <if test="managerName != null  and managerName != ''"> and manager_name like concat('%', #{managerName}, '%')</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="tel != null  and tel != ''"> and tel = #{tel}</if>
+            <if test="emile != null  and emile != ''"> and emile = #{emile}</if>
+            <if test="userType != null  and userType != ''"> and user_type = #{userType}</if>
+            <if test="joinTime != null "> and join_time = #{joinTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="image != null  and image != ''"> and image = #{image}</if>
+        </where>
+    </select>
+
+    <select id="selectManagerById" parameterType="Long" resultMap="ManagerResult">
+        <include refid="selectManagerVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertManager" parameterType="Manager" useGeneratedKeys="true" keyProperty="id">
+        insert into a_manager
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="managerName != null and managerName != ''">manager_name,</if>
+            <if test="password != null and password != ''">password,</if>
+            <if test="tel != null and tel != ''">tel,</if>
+            <if test="emile != null and emile != ''">emile,</if>
+            <if test="userType != null and userType != ''">user_type,</if>
+            <if test="joinTime != null">join_time,</if>
+            <if test="status != null">status,</if>
+            <if test="image != null">image,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="managerName != null and managerName != ''">#{managerName},</if>
+            <if test="password != null and password != ''">#{password},</if>
+            <if test="tel != null and tel != ''">#{tel},</if>
+            <if test="emile != null and emile != ''">#{emile},</if>
+            <if test="userType != null and userType != ''">#{userType},</if>
+            <if test="joinTime != null">#{joinTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="image != null">#{image},</if>
+        </trim>
+    </insert>
+
+    <update id="updateManager" parameterType="Manager">
+        update a_manager
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="managerName != null and managerName != ''">manager_name = #{managerName},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="tel != null and tel != ''">tel = #{tel},</if>
+            <if test="emile != null and emile != ''">emile = #{emile},</if>
+            <if test="userType != null and userType != ''">user_type = #{userType},</if>
+            <if test="joinTime != null">join_time = #{joinTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="image != null">image = #{image},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteManagerById" parameterType="Long">
+        delete from a_manager where id = #{id}
+    </delete>
+
+    <delete id="deleteManagerByIds" parameterType="String">
+        delete from a_manager where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

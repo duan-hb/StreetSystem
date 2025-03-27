@@ -61,6 +61,32 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>Manager</artifactId>
+            <version>3.8.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>Merchants</artifactId>
+            <version>3.8.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>Store</artifactId>
+            <version>3.8.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>Consumer</artifactId>
+            <version>3.8.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>Complaints</artifactId>
+            <version>3.8.9</version>
+        </dependency>
+
     </dependencies>
 
     <build>
