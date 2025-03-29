@@ -31,6 +31,9 @@
         <include refid="selectMerchantsVo"/>
         where id = #{id}
     </select>
+    <select id="selectMerchantsByName" resultType="java.lang.Integer">
+        select id from ry.merchants where name=#{name}
+    </select>
 
     <insert id="insertMerchants" parameterType="Merchants" useGeneratedKeys="true" keyProperty="id">
         insert into merchants

@@ -312,7 +312,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除店铺信息管理编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除编号为"' + ids + '"的商户？').then(function() {
         return delMerchants(ids);
       }).then(() => {
         this.getList();

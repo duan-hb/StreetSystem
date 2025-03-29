@@ -86,6 +86,11 @@
             <artifactId>Complaints</artifactId>
             <version>3.8.9</version>
         </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>StoreType</artifactId>
+            <version>3.8.9</version>
+        </dependency>
 
     </dependencies>
 

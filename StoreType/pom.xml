@@ -9,20 +9,18 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Merchants</artifactId>
+    <artifactId>StoreType</artifactId>
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>Merchants-Store</artifactId>
-            <version>3.8.9</version>
-        </dependency>
-
     </dependencies>
+
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

@@ -58,5 +58,7 @@ public interface MerchantsMapper
      * @return 结果
      */
     public int deleteMerchantsByIds(Long[] ids);
+
+    int selectMerchantsByName(String name);
 }
 

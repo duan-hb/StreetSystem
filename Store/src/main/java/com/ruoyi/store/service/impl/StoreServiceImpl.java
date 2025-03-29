@@ -1,6 +1,10 @@
 package com.ruoyi.store.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.merchants.domain.Merchants;
+import com.ruoyi.merchants.mapper.MerchantsMapper;
+import com.ruoyi.merchantsstore.mapper.MerchantsStoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.store.mapper.StoreMapper;
@@ -18,6 +22,10 @@ public class StoreServiceImpl implements IStoreService
 {
     @Autowired
     private StoreMapper storeMapper;
+    @Autowired
+    private MerchantsMapper merchantsMapper;
+    @Autowired
+    private MerchantsStoreMapper merchantsStoreMapper;
 
     /**
      * 查询店铺管理
@@ -40,7 +48,8 @@ public class StoreServiceImpl implements IStoreService
     @Override
     public List<Store> selectStoreList(Store store)
     {
-        return storeMapper.selectStoreList(store);
+        List<Store> stores = storeMapper.selectStoreList(store);
+        return stores;
     }
 
     /**
@@ -64,7 +73,17 @@ public class StoreServiceImpl implements IStoreService
     @Override
     public int updateStore(Store store)
     {
-        return storeMapper.updateStore(store);
+        Merchants merchants = store.getMerchants();
+        Long oldId = merchants.getId(); //改前的持有者id
+        String newName = merchants.getName(); //改后的持有者名字
+        Long storeId = store.getId(); //店铺id
+        //需要获取改后的持有者id
+        int newId = merchantsMapper.selectMerchantsByName(newName);
+        // 修改中间表
+        int i = merchantsStoreMapper.updateMerchantsStore(oldId,newId,storeId);
+        int j = storeMapper.updateStore(store);
+        //可用自定义错误捕获，待定
+        return j;
     }
 
     /**
@@ -76,6 +95,8 @@ public class StoreServiceImpl implements IStoreService
     @Override
     public int deleteStoreByIds(Long[] ids)
     {
+        //删除中间表
+        int i = merchantsStoreMapper.deletStore(ids);
         return storeMapper.deleteStoreByIds(ids);
     }
 
@@ -88,6 +109,7 @@ public class StoreServiceImpl implements IStoreService
     @Override
     public int deleteStoreById(Long id)
     {
+
         return storeMapper.deleteStoreById(id);
     }
 }

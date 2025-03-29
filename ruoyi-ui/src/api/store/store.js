@@ -9,6 +9,13 @@ export function listStore(query) {
   })
 }
 
+export function getStoreType() {
+  return request({
+    url: '/store/store/type',
+    method: 'get'
+  })
+}
+
 // 查询店铺管理详细
 export function getStore(id) {
   return request({

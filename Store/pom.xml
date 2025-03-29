@@ -15,6 +15,20 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>Merchants</artifactId>
+            <version>3.8.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>Merchants-Store</artifactId>
+            <version>3.8.9</version>
+        </dependency>
     </dependencies>
 
     <properties>

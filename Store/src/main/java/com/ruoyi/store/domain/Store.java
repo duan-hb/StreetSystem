@@ -1,9 +1,13 @@
 package com.ruoyi.store.domain;
 
+import com.ruoyi.merchants.domain.Merchants;
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+
+import java.util.Objects;
 
 /**
  * 店铺管理对象 store
@@ -11,6 +15,8 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author EMANON
  * @date 2025-03-27
  */
+
+@Data
 public class Store extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -34,55 +40,9 @@ public class Store extends BaseEntity
     @Excel(name = "店铺状态")
     private String status;
 
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
+    //商户信息，可不存在
+    private Merchants merchants;
 
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setAddress(String address)
-    {
-        this.address = address;
-    }
-
-    public String getAddress()
-    {
-        return address;
-    }
-
-    public void setType(String type)
-    {
-        this.type = type;
-    }
-
-    public String getType()
-    {
-        return type;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
-    public String getStatus()
-    {
-        return status;
-    }
 
     @Override
     public String toString() {
@@ -92,6 +52,7 @@ public class Store extends BaseEntity
                 .append("address", getAddress())
                 .append("type", getType())
                 .append("status", getStatus())
+                .append("merchants",getMerchants())
                 .toString();
     }
 }

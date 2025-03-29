@@ -10,25 +10,32 @@
         <result property="address"    column="address"    />
         <result property="type"    column="type"    />
         <result property="status"    column="status"    />
+        <association property="merchants" javaType="com.ruoyi.merchants.domain.Merchants">
+            <result property="id" column="m_id"></result>
+            <result property="name" column="m_name"></result>
+            <result property="phone" column="phone"></result>
+        </association>
     </resultMap>
 
     <sql id="selectStoreVo">
-        select id, name, address, type, status from store
+        select s.id,s.name,s.address,s.type,s.status,m.id as m_id,m.name as m_name,m.phone from ry.store s
+            left join ry.merchants_store ms on s.id = ms.sid
+            left join ry.merchants m on ms.mid = m.id
     </sql>
 
     <select id="selectStoreList" parameterType="Store" resultMap="StoreResult">
         <include refid="selectStoreVo"/>
         <where>
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="address != null  and address != ''"> and address = #{address}</if>
-            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="name != null  and name != ''"> and s.name like concat('%', #{name}, '%')</if>
+            <if test="address != null  and address != ''"> and s.address = #{address}</if>
+            <if test="type != null  and type != ''"> and s.type = #{type}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
         </where>
     </select>
 
     <select id="selectStoreById" parameterType="Long" resultMap="StoreResult">
         <include refid="selectStoreVo"/>
-        where id = #{id}
+        where s.id = #{id}
     </select>
 
     <insert id="insertStore" parameterType="Store" useGeneratedKeys="true" keyProperty="id">

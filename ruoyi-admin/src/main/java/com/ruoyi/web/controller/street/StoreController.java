@@ -2,6 +2,11 @@ package com.ruoyi.web.controller.street;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.merchants.domain.Merchants;
+import com.ruoyi.storetype.domain.StoreType;
+import com.ruoyi.storetype.service.StoreTypeService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +24,8 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.store.domain.Store;
 import com.ruoyi.store.service.IStoreService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
 
-/**
- * 店铺管理Controller
- *
+ /*
  * @author EMANON
  * @date 2025-03-27
  */
@@ -33,6 +35,9 @@ public class StoreController extends BaseController
 {
     @Autowired
     private IStoreService storeService;
+    @Autowired
+    private StoreTypeService storeTypeService;
+
 
     /**
      * 查询店铺管理列表
@@ -41,9 +46,16 @@ public class StoreController extends BaseController
     @GetMapping("/list")
     public TableDataInfo list(Store store)
     {
+        //分页查询商店信息
         startPage();
         List<Store> list = storeService.selectStoreList(store);
         return getDataTable(list);
+    }
+
+    @GetMapping("/type")
+    public AjaxResult getStoreType(){
+        List<StoreType> typeList = storeTypeService.list();
+        return success(typeList);
     }
 
     /**
@@ -99,6 +111,7 @@ public class StoreController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
+
         return toAjax(storeService.deleteStoreByIds(ids));
     }
 }

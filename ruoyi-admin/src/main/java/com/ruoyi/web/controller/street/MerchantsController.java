@@ -99,6 +99,7 @@ public class MerchantsController extends BaseController
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
+        //修改中间表mid为0，查询时mid为0数据显示空
         return toAjax(merchantsService.deleteMerchantsByIds(ids));
     }
 }

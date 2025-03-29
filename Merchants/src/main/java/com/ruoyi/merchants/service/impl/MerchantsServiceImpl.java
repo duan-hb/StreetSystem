@@ -1,6 +1,8 @@
 package com.ruoyi.merchants.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.merchantsstore.mapper.MerchantsStoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.merchants.mapper.MerchantsMapper;
@@ -18,6 +20,8 @@ public class MerchantsServiceImpl implements IMerchantsService
 {
     @Autowired
     private MerchantsMapper merchantsMapper;
+    @Autowired
+    private MerchantsStoreMapper merchantsStoreMapper;
 
     /**
      * 查询店铺信息管理
@@ -76,6 +80,8 @@ public class MerchantsServiceImpl implements IMerchantsService
     @Override
     public int deleteMerchantsByIds(Long[] ids)
     {
+        //中间表mid设为0
+        int i = merchantsStoreMapper.updateMerchantsIdToZero(ids);
         return merchantsMapper.deleteMerchantsByIds(ids);
     }
 
